@@ -1,0 +1,2 @@
+# EstacionMetorologica-WemosD1-Mini
+Una estacion meteorologica hecha por mi con la idea de ser accedida via web con la utilizacion de dispositivos embebidos como placas de desarrollo Wemos D1 Mini con sus respectivos sensores orientados a la meteorologia, un servidor web http que tambien utiliza el protocolo de WebSockets para poder tener actualizaciones de los datos en tiempo real, entre otras cosas.
