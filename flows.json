@@ -1,0 +1,624 @@
+[
+    {
+        "id": "eb198e8f3014c237",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "424baab8a9a7db72",
+        "type": "mqtt in",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "topic": "test",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "103af03ab387ac01",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 70,
+        "y": 60,
+        "wires": [
+            [
+                "375ff04db8bd6588"
+            ]
+        ]
+    },
+    {
+        "id": "375ff04db8bd6588",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "papitas",
+        "func": "if (msg.payload == \"papitas\"){\n    msg.payload = \"Hay papitas\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 60,
+        "wires": [
+            [
+                "4859e5d030a0f364",
+                "26b6b0c88a870b45"
+            ]
+        ]
+    },
+    {
+        "id": "4859e5d030a0f364",
+        "type": "ui_text",
+        "z": "eb198e8f3014c237",
+        "group": "48182c0b44584834",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "papitas again",
+        "label": "value",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 370,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "26b6b0c88a870b45",
+        "type": "debug",
+        "z": "eb198e8f3014c237",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "35c864c97bfa6e47",
+        "type": "mqtt in",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "topic": "temp",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "103af03ab387ac01",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 70,
+        "y": 160,
+        "wires": [
+            [
+                "9c095a0fe65d6679"
+            ]
+        ]
+    },
+    {
+        "id": "97e6c3280b2fd98c",
+        "type": "mqtt out",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "topic": "led",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "103af03ab387ac01",
+        "x": 730,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "799bb40e8c103f3b",
+        "type": "mqtt in",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "topic": "hum",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "103af03ab387ac01",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 70,
+        "y": 280,
+        "wires": [
+            [
+                "9c095a0fe65d6679"
+            ]
+        ]
+    },
+    {
+        "id": "0f7bbd2c122b0779",
+        "type": "mongodb out",
+        "z": "eb198e8f3014c237",
+        "mongodb": "1b66266462ffccc3",
+        "name": "JSON 2.0 (La Venganza)",
+        "collection": "pruebas",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 1090,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "9c095a0fe65d6679",
+        "type": "join",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 210,
+        "y": 220,
+        "wires": [
+            [
+                "d0e1c4a9c9f04337",
+                "5002d832d1b6aeab"
+            ]
+        ]
+    },
+    {
+        "id": "15b1bb68cb1974c4",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "function 6",
+        "func": "function time() {\n    let fecha = new Date();\n    let hora = fecha.getHours();\n    if (hora < 10) { hora = \"0\" + hora.toString(); }\n    let minutos = fecha.getMinutes();\n    if (minutos < 10) { minutos = \"0\" + minutos.toString(); }\n    let mes = fecha.getMonth() + 1;\n    mes = mes.toString();\n    let dia = fecha.getDate();\n    dia = dia.toString();\n    return [hora + \":\" + minutos, mes + \"/\" + dia]\n}\nmsg.payload[\"dat\"][\"bp\"] = NaN\nmsg.payload[\"dat\"][\"hora\"] = time()\n\nlet Dstr = Object.keys(msg.payload[\"db\"]).length - 1;\nlet graph = [];\nlet hora1 = [];\nlet temp1 = [];\nlet hum1 = [];\nlet bp1 = [];\nlet datos = msg.payload[\"db\"];\nlet datos2 = msg.payload[\"db\"][Dstr]\n\nfor (let i = Dstr - 50; i <= Dstr; i++) {\n    hora1.push(datos[i.toString()][\"hora\"]);\n    temp1.push(datos[i.toString()][\"temp\"]);\n    hum1.push(datos[i.toString()][\"hum\"]);\n    bp1.push(NaN);\n}\ngraph.push(hora1);\ngraph.push(temp1);\ngraph.push(hum1);\ngraph.push(bp1);\n\n\nmsg.payload = {\n    \"temp\": msg.payload[\"dat\"][\"temp\"],\n    \"hum\": msg.payload[\"dat\"][\"hum\"],\n    \"bp\": NaN,\n    \"luz\": msg.payload[\"dat\"][\"luz\"],\n    \"hora\": msg.payload[\"dat\"][\"hora\"],\n    \"graph\": graph\n}\nmsg._session = \"\";\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 220,
+        "wires": [
+            [
+                "0f7bbd2c122b0779",
+                "f5b3962801329cca"
+            ]
+        ]
+    },
+    {
+        "id": "208deeba83af2214",
+        "type": "mongodb in",
+        "z": "eb198e8f3014c237",
+        "mongodb": "1b66266462ffccc3",
+        "name": "JSON MOMENT",
+        "collection": "pruebas",
+        "operation": "find",
+        "x": 460,
+        "y": 400,
+        "wires": [
+            [
+                "1cfdf2a7b493c1de"
+            ]
+        ]
+    },
+    {
+        "id": "6673a4d13bc94378",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "Data division",
+        "func": "let Dstr = Object.keys(msg.payload).length - 1;\n\nmsg.payload = msg.payload[Dstr]\ndelete msg.payload[\"_id\"]\n\nvar temp = { payload: msg.payload[\"temp\"] };\nvar hum = { payload: msg.payload[\"hum\"] };\n\nreturn [temp, hum]\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 90,
+        "y": 620,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c19e45cba0e31f53",
+        "type": "inject",
+        "z": "eb198e8f3014c237",
+        "name": "Inicializador trucho",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 130,
+        "y": 400,
+        "wires": [
+            [
+                "208deeba83af2214"
+            ]
+        ]
+    },
+    {
+        "id": "1cfdf2a7b493c1de",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "THIS IS GLORIUS",
+        "func": "let Dstr = Object.keys(msg.payload).length - 1;\nlet graph = [];\nlet hora1 = [];\nlet temp1 = [];\nlet hum1 = [];\nlet bp1 = [];\nlet datos = msg.payload;\nlet datos2 = msg.payload[Dstr]\ndelete msg.payload[\"_id\"]\n\nfor (let i = Dstr - 50; i <= Dstr; i++) {\n    hora1.push(datos[i.toString()][\"hora\"]);\n    temp1.push(datos[i.toString()][\"temp\"]);\n    hum1.push(datos[i.toString()][\"hum\"]);\n    bp1.push(NaN);\n}\ngraph.push(hora1);\ngraph.push(temp1);\ngraph.push(hum1);\ngraph.push(bp1);\n\ndatos2[\"graph\"] = graph;\n\nmsg.payload = {\n        \"temp\" : datos2[\"temp\"],\n        \"hum\": datos2[\"hum\"],\n        \"bp\": NaN,\n        \"luz\": datos2[\"luz\"],\n        \"hora\": datos2[\"hora\"],\n        \"graph\": datos2[\"graph\"]\n}\nmsg._session = \"\";\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 400,
+        "wires": [
+            [
+                "8c5a2149f639cbfd"
+            ]
+        ]
+    },
+    {
+        "id": "c7e341a0.381cc",
+        "type": "http in",
+        "z": "eb198e8f3014c237",
+        "name": "WEB SERVER",
+        "url": "/EM",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 520,
+        "wires": [
+            [
+                "2fb1c354.d04e3c"
+            ]
+        ]
+    },
+    {
+        "id": "2fb1c354.d04e3c",
+        "type": "file in",
+        "z": "eb198e8f3014c237",
+        "name": "HTML",
+        "filename": "C:/Users/nicol/.node-red/staticContent/ws.html",
+        "filenameType": "str",
+        "format": "utf8",
+        "encoding": "none",
+        "allProps": false,
+        "x": 250,
+        "y": 520,
+        "wires": [
+            [
+                "88974243.7768c"
+            ]
+        ]
+    },
+    {
+        "id": "88974243.7768c",
+        "type": "http response",
+        "z": "eb198e8f3014c237",
+        "name": "RESPONSE",
+        "statusCode": "",
+        "headers": {},
+        "x": 390,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "8c5a2149f639cbfd",
+        "type": "websocket out",
+        "z": "eb198e8f3014c237",
+        "name": "ws O",
+        "server": "985ecbc7.67a138",
+        "client": "",
+        "x": 810,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "9b9774609d2dc143",
+        "type": "websocket in",
+        "z": "eb198e8f3014c237",
+        "name": "WS OUT",
+        "server": "985ecbc7.67a138",
+        "client": "",
+        "x": 80,
+        "y": 440,
+        "wires": [
+            [
+                "23f9aa4bec448d40"
+            ]
+        ]
+    },
+    {
+        "id": "23f9aa4bec448d40",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "TRUE? 2.0",
+        "func": "if (msg.payload == \"hi\"){\n    msg.payload = true;\n}\nelse {msg.payload = false}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 440,
+        "wires": [
+            [
+                "208deeba83af2214"
+            ]
+        ]
+    },
+    {
+        "id": "d0e1c4a9c9f04337",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "TRUE?",
+        "func": "msg.payload=true;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 260,
+        "wires": [
+            [
+                "11ee3ca02cb469d6"
+            ]
+        ]
+    },
+    {
+        "id": "11ee3ca02cb469d6",
+        "type": "mongodb in",
+        "z": "eb198e8f3014c237",
+        "mongodb": "1b66266462ffccc3",
+        "name": "PAIN",
+        "collection": "pruebas",
+        "operation": "find",
+        "x": 470,
+        "y": 260,
+        "wires": [
+            [
+                "44385bd456e99c5d"
+            ]
+        ]
+    },
+    {
+        "id": "3865a321e7b544c0",
+        "type": "join",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 750,
+        "y": 220,
+        "wires": [
+            [
+                "15b1bb68cb1974c4"
+            ]
+        ]
+    },
+    {
+        "id": "44385bd456e99c5d",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "topicator 2.0",
+        "func": "msg.topic = \"db\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 260,
+        "wires": [
+            [
+                "3865a321e7b544c0"
+            ]
+        ]
+    },
+    {
+        "id": "5002d832d1b6aeab",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "topicator 1.0",
+        "func": "msg.topic = \"dat\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 220,
+        "wires": [
+            [
+                "3865a321e7b544c0"
+            ]
+        ]
+    },
+    {
+        "id": "f5b3962801329cca",
+        "type": "websocket out",
+        "z": "eb198e8f3014c237",
+        "name": "ws O 2.0",
+        "server": "985ecbc7.67a138",
+        "client": "",
+        "x": 1040,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "3eb3b4a669fe2e1e",
+        "type": "inject",
+        "z": "eb198e8f3014c237",
+        "name": "switch OFF",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2",
+        "payloadType": "str",
+        "x": 570,
+        "y": 80,
+        "wires": [
+            [
+                "97e6c3280b2fd98c"
+            ]
+        ]
+    },
+    {
+        "id": "e2d278c23c791eea",
+        "type": "inject",
+        "z": "eb198e8f3014c237",
+        "name": "switch ON",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 570,
+        "y": 40,
+        "wires": [
+            [
+                "97e6c3280b2fd98c"
+            ]
+        ]
+    },
+    {
+        "id": "887d9da3f9304108",
+        "type": "mqtt in",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "topic": "luz",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "103af03ab387ac01",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 70,
+        "y": 220,
+        "wires": [
+            [
+                "9c095a0fe65d6679"
+            ]
+        ]
+    },
+    {
+        "id": "103af03ab387ac01",
+        "type": "mqtt-broker",
+        "name": "Mi server luna de pluton",
+        "broker": "10.54.3.150",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "48182c0b44584834",
+        "type": "ui_group",
+        "name": "IDK",
+        "tab": "43d97f4526b4d871",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1b66266462ffccc3",
+        "type": "mongodb",
+        "hostname": "127.0.0.1",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "EM",
+        "name": ""
+    },
+    {
+        "id": "985ecbc7.67a138",
+        "type": "websocket-listener",
+        "z": "eb198e8f3014c237",
+        "path": "/ws/simple",
+        "wholemsg": "false"
+    },
+    {
+        "id": "43d97f4526b4d871",
+        "type": "ui_tab",
+        "name": "EM ETEC",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
