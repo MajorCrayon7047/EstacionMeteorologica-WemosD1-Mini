@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ES">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estacion Metelorogica</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="recursos/ja.png">
+</head>
+<body>
+    
+    <section id="basicData">
+        <div>
+            <ul>
+                <img src="recursos/temperatura.png" alt="" class="simbols"><h1>Temperatura: <span id="temp">0</span>°C</h1>
+                <img src="recursos/humedad.png" alt="" class="simbols"><h1>Humedad: <span id="hum">0</span>%</h1>
+                <img src="recursos/presion.png" alt="" class="simbols"><h1>Presion Atmosferica: <span id="bp">0</span>hPa</h1>
+                <img src="recursos/reloj.png" alt="" class="simbols" id="reloj"><p id="act">Ultima actualizacion: <span id="time">0</span></p>
+                <img id="luz" src="" alt="">
+            </ul>
+            
+            <!-- <img class="Nagatoro" src="recursos/Naga.png" alt=""> -->
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td class="tabla">Hora</td>
+                    <td class="tabla">Temperatura</td>
+                    <td class="tabla">Humedad</td>
+                    <td class="tabla">Presion Atmosferica</td>
+                </tr>
+                <tr> 
+                    <td name="Thora" class="tabla">0</td>
+                    <td class="tabla"><span name="Ttemp">0</span>°C</td>
+                    <td class="tabla"><span name="Thum">0</span>%</td>
+                    <td class="tabla"><span name="Tbp">0</span>hPa</td>
+                </tr>
+                <tr>
+                    <td name="Thora" class="tabla">0</td>
+                    <td class="tabla"><span name="Ttemp">0</span>°C</td>
+                    <td class="tabla"><span name="Thum">0</span>%</td>
+                    <td class="tabla"><span name="Tbp">0</span>hPa</td>
+                </tr>
+                <tr>
+                    <td name="Thora" class="tabla">0</td>
+                    <td class="tabla"><span name="Ttemp">0</span>°C</td>
+                    <td class="tabla"><span name="Thum">0</span>%</td>
+                    <td class="tabla"><span name="Tbp">0</span>hPa</td>
+                </tr>
+                <tr>
+                    <td name="Thora" class="tabla">0</td>
+                    <td class="tabla"><span name="Ttemp">0</span>°C</td>
+                    <td class="tabla"><span name="Thum">0</span>%</td>
+                    <td class="tabla"><span name="Tbp">0</span>hPa</td>
+                </tr>
+                <tr>
+                    <td name="Thora" class="tabla">0</td>
+                    <td class="tabla"><span name="Ttemp">0</span>°C</td>
+                    <td class="tabla"><span name="Thum">0</span>%</td>
+                    <td class="tabla"><span name="Tbp">0</span>hPa</td>
+                </tr>
+                <tr>
+                    <td name="Thora" class="tabla">0</td>
+                    <td class="tabla"><span name="Ttemp">0</span>°C</td>
+                    <td class="tabla"><span name="Thum">0</span>%</td>
+                    <td class="tabla"><span name="Tbp">0</span>hPa</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="grafico">
+        <canvas id="myChart"></canvas>
+        <div id="botonsitos">
+            <button id="+" onclick="downScale()">-</button>
+            <button id="-" onclick="upScale()">+</button>
+            <p id="muestrasV">cantidad de muestras: <span id="escala">50</span></p>
+        </div>
+    </section>
+    <footer></footer>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js" integrity="sha512-zjlf0U0eJmSo1Le4/zcZI51ks5SjuQXkU0yOdsOBubjSmio9iCUp8XPLkEAADZNBdR9crRy3cniZ65LF2w8sRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="app.js"></script>
+</html>

@@ -1,0 +1,96 @@
+*{
+    font-family: sans-serif;
+    color: white;
+    background: rgb(44, 44, 44);
+    margin-left: 9px;
+
+}
+body{
+    height: 83vh;
+    width: 99vw;
+    margin: 3vh 0px;
+    
+}
+.simbols{
+    float: left;
+    max-width: 30px;
+    max-height: 30px;
+    margin-right: 5px;
+}
+#reloj{
+    max-width: 20px; 
+    max-height: 20px;
+    margin-top: 15px;
+}
+.Nagatoro{
+    margin-left: 0px;
+    position: relative;
+    bottom: -11.5vmax;
+    float: right;
+}
+#act{
+    color: rgba(240, 255, 255, 0.733);
+    margin-top: 40px;
+}
+#time{
+    color: rgba(240, 255, 255, 0.733);
+}
+.tabla{
+    border: 1px solid whitesmoke;
+    text-align: center;
+    padding: 0.6vh 0.5vw;
+    background: rgb(34, 34, 34);
+
+}
+table{
+    border: 1px solid whitesmoke;
+    margin-left: 40px;
+    margin-top: 40px;
+    background: rgb(34, 34, 34);
+}
+table span{
+    background: rgb(34, 34, 34);
+}
+#basicData{
+    float: left;
+}
+#grafico{
+    float: left;
+    height: clamp(300px, 60%, 600px);
+    width: clamp(500px, 60%, 800px);
+    position: relative;
+    top: 5vh;
+    margin-left: 2vw;
+    
+}
+/*
+footer{
+    clear: both;
+    
+}
+*/
+#botonsitos{
+    display: flex
+}
+button{
+    color: white;
+    background: rgb(150, 150, 150);
+    height: 30px;
+    width: 30px;
+    margin-left: 8px;
+    margin-right: 3px;
+
+}
+#muestrasV{
+    color: rgb(150, 150, 150);
+    margin-top: 5px;
+    font-size: larger;
+}
+#luz{
+    position: absolute;
+    right: 61.5vw;
+    bottom: 75.5vh;
+    z-index: 1;
+    padding: 0 0;
+    background-color: transparent;
+}
