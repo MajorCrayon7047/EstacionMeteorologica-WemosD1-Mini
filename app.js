@@ -56,7 +56,7 @@
 
     // Conexion al Web Socket
     function WSconnect(){
-        const socket = new WebSocket('ws://127.0.0.1:1880/ws/simple');
+        const socket = new WebSocket('ws://192.168.40.241:1880/ws/simple');
         return socket
     }
     //funcion clickHandler (basicamente permite que las configuraciones del grafico se guarden)
