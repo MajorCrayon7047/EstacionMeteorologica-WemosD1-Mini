@@ -6,22 +6,28 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <Adafruit_BMP085.h>
 
-#define DHTPIN 2
 
 int LED = 14;
 
+#define DHTPIN 2
 #define DHTTYPE    DHT11
 DHT dht(DHTPIN, DHTTYPE);
 float temp;
 int hum;
-float presion;
+
+Adafruit_BMP085 bmp;
+int presion;
+
+unsigned long now;
+unsigned long ultima;
 
 const char* ssid = "Notebooks ETEC";
 //const char* password = "ponecualquiera";
 const char* password = "373k123*";
-//IPAddress server(192, 168, 54, 224);  //MQTT server IP 
-IPAddress server(10, 54, 3, 150);
+//IPAddress server(192, 168, 54, 224);  //MQTT server IP
+IPAddress server(192,168,40,241);
 #define MQTT_port 1883
 
 WiFiClient espClient;
@@ -50,6 +56,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
     digitalWrite(LED, LOW);  // Turn the LED off by making the voltage HIGH
     Serial.print("led apagado");
   }
+  if (mensaje != "" && mensaje != "1" && mensaje != "2"){
+    Serial.print("Sleep moment");
+    ESP.deepSleep(900000000);
+  }
 
 }
 
@@ -71,7 +81,7 @@ void reconnect() {
       client.subscribe("test");
       client.subscribe("hum");
       client.subscribe("temp");
-      client.subscribe("led");
+      client.subscribe("led"); 
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -86,6 +96,11 @@ void setup() {
   Serial.begin(115200);
   pinMode(LED, OUTPUT);
   dht.begin();
+
+  if (!bmp.begin()) {
+  Serial.println("Could not find a valid BMP085 sensor, check wiring!");
+  while (1) {}
+  }
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
@@ -110,16 +125,15 @@ void loop() {
     reconnect();
   }
   client.loop();
-  unsigned long now = millis();
-  if (now - lastMsg > 2000) {
-    lastMsg = now;
-    float t = dht.readTemperature();
+  if (millis()>=ultima){
+    ultima = millis() + 2000;
+    presion = bmp.readPressure() * 0.01;
+    float t = bmp.readTemperature();
     float h = dht.readHumidity();
-    if (isnan(t) || isnan(h)){
-      t = dht.readTemperature();
+    while(/*isnan(t) ||*/ isnan(h)){
+      //t = dht.readTemperature();
       h = dht.readHumidity();
     }
-    
     snprintf (msg,  MSG_BUFFER_SIZE, "%.2f", t);
     Serial.print("Mensaje Mandado T: ");
     Serial.println(msg);
@@ -129,6 +143,10 @@ void loop() {
     Serial.print("Mensaje Mandado H: ");
     Serial.println(msg);
     client.publish("hum", msg);
+
+    snprintf (msg,  MSG_BUFFER_SIZE, "%i", presion);
+    Serial.print("Mensaje Mandado bp: ");
+    Serial.println(msg);
+    client.publish("bp", msg);
   }
-  
 }
