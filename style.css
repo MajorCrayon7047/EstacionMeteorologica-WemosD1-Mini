@@ -94,3 +94,10 @@ button{
     padding: 0 0;
     background-color: transparent;
 }
+#etec{
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    left: 0.2vw;
+    bottom: 90vh;
+}
