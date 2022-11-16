@@ -3,6 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estación Meteorológica</title>
+    <link rel="icon" href="https://media.discordapp.net/attachments/909971778724593684/1034524837433057342/ja.png">
+    <style>
+*{
+    font-family: sans-serif;
+    color: white;
+    background: rgb(44, 44, 44);
+    margin-left: 0vw;
+
+}
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0vh 0px;
+}
+ul{
+    padding: 0px 3vh 0px;
+}
+.simbols{
+    float: left;
+    max-width: 4.5vh;
+    max-height: 4.5vh;
+    margin-right: 1vw;
+}
+#reloj{
+    max-width: 20px; 
+    max-height: 20px;
+    margin-top: 15px;
+}
+.Nagatoro{
+    margin-left: 0px;
+    position: relative;
+    bottom: -11.5vmax;
+    float: right;
+}
+#act{
+    color: rgba(240, 255, 255, 0.733);
+    margin-top: 40px;
+}
+#time{
+    color: rgba(240, 255, 255, 0.733);
+}
+.tabla{
+    border: 1px solid whitesmoke;
+    text-align: center;
+    padding: 0.6vh 0.5vw;
+    background: rgb(34, 34, 34);
+
+}
+table{
+    border: 1px solid whitesmoke;
+    margin-left: 3vh;
+    margin-top: 40px;
+    background: rgb(34, 34, 34);
+}
+table span{
+    background: rgb(34, 34, 34);
+}
+#basicData{
+    float: left;
+}
+#grafico{
+    float: left;
+    height: clamp(280px, 60%, 800px);
+    width: clamp(380px, 60%, 1000px);
+    position: sticky;
+    top: 5vh;
+    margin-left: 2vw;
+}
+
+footer{
+    clear: both;
+}
+
+#botonsitos{
+    display: flex
+}
+button{
+    color: white;
+    background: rgb(150, 150, 150);
+    height: 4vh;
+    width: 4vh;
+    margin-left: 0.8vh;
+    margin-right: 0.8vh;
+
+}
+#muestrasV{
+    color: rgb(150, 150, 150);
+    margin-top: 5px;
+    font-size: larger;
+}
+#luz{                                                                                                   
+    position: absolute;
+    right: 61.5vw;
+    bottom: 75.5vh;
+    z-index: 1;
+    padding: 0 0;
+    background-color: transparent;
+}
+#etec{
+    position: absolute;
+    height: 8vh;
+    width: 8vh;
+    left: 0;
+    top: 0vh;
+    padding: 0vw 0vh 0vh;
+    margin-top: 2vh;
+    margin-left: 0.5vw;
+}
+#titulo{
+    position: relative;
+    padding: 0px 3vh 0px;
+    margin-left: 7.5vh;
+    font-size: 5vh;
+}
+#weas{
+    display: flex;
+    float: right;
+}
+#git1{
+    width: 87.5px;
+    height: 25px;
+    aspect-ratio: 1/1;
+    border: none;
+    cursor:pointer;
+    background-color: transparent;
+    padding: 0vh 0vh 0px;
+}
+#git2{
+    padding: 0 0 0;
+    width: 87.5px;
+    height: 25px;
+    border: none;
+    cursor:pointer;
+    background-color: transparent;
+    margin-top: 3vw;
+}
+#excel{
+    width: 90px;
+    height: 25px;
+    aspect-ratio: 1/1;
+    border: none;
+    cursor:pointer;
+    background-color: transparent;
+    padding: 0vh 0vh 0px;
+}
+#excel1{
+    padding: 0 0 0;
+    width: 90px;
+    height: 25px;
+    border: none;
+    cursor:pointer;
+    background-color: transparent;
+    margin-top: 3vw;
+}
+    </style>
+</head>
+<body>
+    <h1 id="titulo">Estación Meteorológica</h1>
+    <img id="etec" src="https://um.edu.ar/wp-content/uploads/2020/05/ETEC-logo.jpg" alt="">
     <title>Estacion Metelorogica</title>
     <link rel="icon" href="https://media.discordapp.net/attachments/909971778724593684/1034524837433057342/ja.png">
     <link rel="stylesheet" href="./style.css">
@@ -77,7 +237,326 @@
             <p id="muestrasV">cantidad de muestras: <span id="escala">50</span></p>
         </div>
     </section>
-    <footer></footer>
+    <footer>
+        <div id="weas">
+            <button id="git2" type="button" onclick=" window.open('https://github.com/MajorCrayon7047/EstacionMeteorologica-WemosD1-Mini', '_blank'); return false;">
+                <img id="git1" src="https://cdn.discordapp.com/attachments/664190600270184448/1042179909398831244/estacion_logo.png" alt="">
+            </button>
+            <button id="excel" type="button" onclick="excel()">
+                <img id="excel1" src="https://cdn.discordapp.com/attachments/664190600270184448/1042405121612587058/DB_EXcel.png" alt="">
+            </button>
+        </div>
+    </footer>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js" integrity="sha512-zjlf0U0eJmSo1Le4/zcZI51ks5SjuQXkU0yOdsOBubjSmio9iCUp8XPLkEAADZNBdR9crRy3cniZ65LF2w8sRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script>
+ //guardo como variables globales los items que quiero modificar mas adelante
+ const defaultLegendClickHandler = Chart.defaults.plugins.legend.onClick;
+
+let escala = document.getElementById("escala");
+
+let temp = document.getElementById("temp");
+let hum = document.getElementById("hum");
+let bp = document.getElementById("bp");
+let UltimaAct = document.getElementById("time");
+
+let horas = document.getElementsByName("Thora");
+let temperaturas = document.getElementsByName("Ttemp");
+let humedades = document.getElementsByName("Thum");
+let presiones = document.getElementsByName("Tbp");
+let luz = document.getElementById("luz")
+
+let upButton = document.getElementById("+");
+let downButton = document.getElementById("-");
+
+const socket = WSconnect();
+const ctx = document.getElementById('myChart');
+let myChart;
+
+let bufferr
+
+//-------------LOCAL STORAGE STUFF---------------
+if(localStorage.getItem('vtemp') == undefined){
+    console.log("llego aca!!");
+    localStorage.setItem("vtemp", false);
+    localStorage.setItem("vhum", true);
+    localStorage.setItem("vbp", true);
+    console.log(localStorage.getItem("vtemp"))
+}
+
+//----------FUNCIONES------------
+const fecha = new Date()
+function time(){
+    let hora = fecha.getHours();
+    hora = hora.toString();
+    let minutos = fecha.getMinutes();
+    minutos = minutos.toString();
+    let mes = fecha.getMonth() + 1; 
+    mes = mes.toString();
+    let dia = fecha.getDate()
+    dia = dia.toString();
+
+    let actual = hora + ":" + minutos + " " + mes + "/" + dia;
+    return actual
+}
+
+// Conexion al Web Socket
+function WSconnect(){
+    const socket = new WebSocket('wss://emetec.wetec.um.edu.ar/ws/simple');
+    return socket
+}
+//funcion clickHandler (basicamente permite que las configuraciones del grafico se guarden)
+const newLegendClickHandler = function(e, legendItem, legend) {
+    const index = legendItem.datasetIndex;
+    console.log(index);
+    const ci = legend.chart;
+    if (ci.isDatasetVisible(index)) {
+        ci.hide(index);
+        legendItem.hidden = true;
+        if (index==1){localStorage.setItem("vhum", true);}
+        else if(index==0){localStorage.setItem("vtemp", true);}
+        else if(index==2){localStorage.setItem("vbp", true);}
+    } else {
+        ci.show(index);
+        legendItem.hidden = false;
+        if (index==1){localStorage.setItem("vhum", false);}
+        else if(index==0){localStorage.setItem("vtemp", false);}
+        else if(index==2){localStorage.setItem("vbp", false);}
+    }
+}
+
+function grafico(x=grafica[0], temperatura=grafica[1], humedad=grafica[2], presion=grafica[3]){
+    if (myChart) {myChart.destroy();}
+    let y = parseInt(localStorage.getItem("escala"), 10);
+    if(y>0){y+1;}
+    x = x.slice(y, 50);
+    temperatura = temperatura.slice(y, 50);
+    humedad = humedad.slice(y, 50);
+    presion = presion.slice(y, 50);
+    escala.innerHTML = presion.length;
+
+    myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: x,
+            datasets: [{
+                label: 'Temperatura',
+                data: temperatura,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                ],
+                borderWidth: 1.5
+            },
+            {
+                label: 'Humedad',
+                data: humedad,
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1.5        
+            },
+            {
+                label: 'Presion Atmosferica',
+                data: presion,
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 206, 86, 1)',
+                ],
+                borderWidth: 1.5        
+            }
+            
+        ]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: true,
+                    onClick: newLegendClickHandler
+                }
+            },
+            animation: {
+                duration: 1
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    function vhum(){
+        if (localStorage.getItem("vhum")=="true"){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    function vtemp(){
+        if (localStorage.getItem("vtemp")=="true"){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    function vbp(){
+        if (localStorage.getItem("vbp")=="true"){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    myChart.getDatasetMeta(0).hidden = vtemp();
+    myChart.getDatasetMeta(1).hidden = vhum();
+    myChart.getDatasetMeta(2).hidden = vbp();
+    myChart.update();
+}
+
+function upScale(){
+    let escala = parseInt(localStorage.getItem("escala"), 10);
+    if (escala==0){return}
+    else{
+        escala--;
+        localStorage.setItem("escala", escala.toString());
+        if (escala==0){downButton.disabled = true}
+        upButton.disabled = false;
+        grafico(bufferr[0], bufferr[1], bufferr[2], bufferr[3]);
+    }
+}
+
+function downScale(){
+    let escala = parseInt(localStorage.getItem("escala"), 10);
+    if (escala==40){return}
+    else{
+        escala++;
+        localStorage.setItem("escala", escala.toString());
+        if (escala==40){upButton.disabled = true}
+        downButton.disabled = false
+        grafico(bufferr[0], bufferr[1], bufferr[2], bufferr[3]);
+    }
+}
+function excel(){
+    const Http = new XMLHttpRequest();
+    const url='https://emetec.wetec.um.edu.ar/excel';
+    Http.open("GET", url);
+    Http.send();
+    Http.onreadystatechange = (e) => {
+            console.log(Http.responseText)
+            var json = JSON.parse(Http.responseText)
+            data = [["Mes / Dia", "Hora","Temperatura", "Humedad", "Presion Atmosferica"]]
+            Dstr = Object.keys(json).length - 1
+            for(i=0;i<=Dstr;i++){
+                data.push([json[i]["hora"][1], json[i]["hora"][0], json[i]["temp"],json[i]["hum"], json[i]["bp"]])
+            }
+            var workbook = XLSX.utils.book_new(),
+                worksheet = XLSX.utils.aoa_to_sheet(data);
+            workbook.SheetNames.push("First");
+            workbook.Sheets["First"] = worksheet;
+            XLSX.writeFile(workbook, "EM_DB.xlsx");
+            console.log("hi")
+    }
+}
+//-------KEYBOARD INPUT HANDLER---------
+document.addEventListener('keydown', (event) => {
+    var keyValue = event.key;
+
+    if(keyValue.toString() == "+"){
+        upScale();
+    }
+    else if(keyValue.toString() == "-"){
+        downScale();
+    }
+  }, false);
+//-----------EVENTOS WS------------
+socket.addEventListener("error", function(event){
+    console.log(event.data)
+});
+
+
+// evento de conexion al WS
+socket.addEventListener('open', function (event) {
+    console.log('Connected to WS Server')
+    socket.send("hi")
+});
+
+
+// esto escucha mensajes del servidor
+socket.addEventListener('message', function (event) {
+    //console.log('Mensaje del servidor: ', event.data);
+    let eventData = event.data.toString();
+    if (!eventData.startsWith("{")){return}
+    else{
+        console.log(event.data);
+        let data = JSON.parse(event.data);
+        
+        console.log(data["temp"]);
+        let Dstr = Object.keys(data).length;
+        let actual = time();
+        UltimaAct.innerHTML = actual;
+        //esto cambia los valores del documento segun lo que me mande el servidor
+        temp.innerHTML = data["temp"];
+        hum.innerHTML = data["hum"];
+        bp.innerHTML = data["bp"];
+        UltimaAct.innerHTML = ` ‎Hora: ${data["hora"][0]} ‎ ‎ | ‎ ‎ Fecha: ${data["hora"][1]}`;
+        if (data["luz"] == "sol"){
+            luz.src = "recursos/sol.png";
+        } else if (data["luz"] == "luna") {
+            luz.src = "recursos/Luna.png";
+        } else if (data["luz"] == "nube"){
+            luz.src = "recursos/nube.png"
+        }else{
+            luz.src = "";
+        }
+
+        let contador = 0;
+        let largo = data["graph"][1].length-1;
+
+
+        for (let i = 5; i>=0; i--){
+            horas[contador].innerHTML = data["graph"][0][largo-i-1][0];
+            temperaturas[contador].innerHTML = data["graph"][1][largo-i-1];
+            humedades[contador].innerHTML = data["graph"][2][largo-i-1];
+            presiones[contador].innerHTML = data["graph"][3][largo-i-1];
+            contador = contador+1;
+
+            if (i==0){
+                grafico(data["graph"][0], data["graph"][1], data["graph"][2], data["graph"][3]);
+                localStorage.setItem("grafica", JSON.stringify(data["graph"]));
+                bufferr = data["graph"]
+            }
+        };
+
+        //aca guardo en el almacenamiento local los datos por si ocurre algo con la conexion del WS
+        localStorage.setItem("valoresSensores", JSON.stringify(data));
+        
+    }
+});
+if(localStorage.getItem("grafica")== undefined){
+    let algo = [["no data", "no data", "no data"], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    localStorage.setItem("grafica", JSON.stringify(algo));
+    localStorage.setItem("escala", 0)
+}
+
+let grafica = JSON.parse(localStorage.getItem("grafica"));
+
+window.addEventListener("load", Init, false);
+function Init(){
+    let escala = parseInt(localStorage.getItem("escala"), 10);
+    if (escala==40){upButton.disabled = true}
+    if (escala==0){downButton.disabled = true}
+}
+</script>
+</html>
 <script src="./app.js"></script>
