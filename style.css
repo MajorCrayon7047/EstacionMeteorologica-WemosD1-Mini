@@ -1,0 +1,152 @@
+*{
+    font-family: sans-serif;
+    color: white;
+    background: rgb(44, 44, 44);
+    margin-left: 0vw;
+
+}
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0vh 0px;
+}
+ul{
+    padding: 0px 3vh 0px;
+}
+.simbols{
+    float: left;
+    max-width: 4.5vh;
+    max-height: 4.5vh;
+    margin-right: 1vw;
+}
+#reloj{
+    max-width: 20px; 
+    max-height: 20px;
+    margin-top: 15px;
+}
+.Nagatoro{
+    margin-left: 0px;
+    position: relative;
+    bottom: -11.5vmax;
+    float: right;
+}
+#act{
+    color: rgba(240, 255, 255, 0.733);
+    margin-top: 40px;
+}
+#time{
+    color: rgba(240, 255, 255, 0.733);
+}
+.tabla{
+    border: 1px solid whitesmoke;
+    text-align: center;
+    padding: 0.6vh 0.5vw;
+    background: rgb(34, 34, 34);
+
+}
+table{
+    border: 1px solid whitesmoke;
+    margin-left: 3vh;
+    margin-top: 40px;
+    background: rgb(34, 34, 34);
+}
+table span{
+    background: rgb(34, 34, 34);
+}
+#basicData{
+    float: left;
+}
+#grafico{
+    float: left;
+    height: clamp(280px, 60%, 800px);
+    width: clamp(380px, 60%, 1000px);
+    position: sticky;
+    top: 5vh;
+    margin-left: 2vw;
+}
+
+footer{
+    clear: both;
+}
+
+#botonsitos{
+    display: flex
+}
+button{
+    color: white;
+    background: rgb(150, 150, 150);
+    height: 4vh;
+    width: 4vh;
+    margin-left: 0.8vh;
+    margin-right: 0.8vh;
+
+}
+#muestrasV{
+    color: rgb(150, 150, 150);
+    margin-top: 5px;
+    font-size: larger;
+}
+#luz{                                                                                                   
+    position: absolute;
+    right: 61.5vw;
+    bottom: 75.5vh;
+    z-index: 1;
+    padding: 0 0;
+    background-color: transparent;
+}
+#etec{
+    position: absolute;
+    height: 8vh;
+    width: 8vh;
+    left: 0;
+    top: 0vh;
+    padding: 0vw 0vh 0vh;
+    margin-top: 2vh;
+    margin-left: 0.5vw;
+}
+#titulo{
+    position: relative;
+    padding: 0px 3vh 0px;
+    margin-left: 7.5vh;
+    font-size: 5vh;
+}
+#weas{
+    display: flex;
+    float: right;
+}
+#git1{
+    width: 87.5px;
+    height: 25px;
+    aspect-ratio: 1/1;
+    border: none;
+    cursor:pointer;
+    background-color: transparent;
+    padding: 0vh 0vh 0px;
+}
+#git2{
+    padding: 0 0 0;
+    width: 87.5px;
+    height: 25px;
+    border: none;
+    cursor:pointer;
+    background-color: transparent;
+    margin-top: 3vw;
+}
+#excel{
+    width: 90px;
+    height: 25px;
+    aspect-ratio: 1/1;
+    border: none;
+    cursor:pointer;
+    background-color: transparent;
+    padding: 0vh 0vh 0px;
+}
+#excel1{
+    padding: 0 0 0;
+    width: 90px;
+    height: 25px;
+    border: none;
+    cursor:pointer;
+    background-color: transparent;
+    margin-top: 3vw;
+}
