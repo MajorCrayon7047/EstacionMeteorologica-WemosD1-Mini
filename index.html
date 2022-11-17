@@ -9,17 +9,25 @@
 *{
     font-family: sans-serif;
     color: white;
-    background: rgb(44, 44, 44);
+    /*background: rgb(44, 44, 44);*/
     margin-left: 0vw;
-
+    
 }
 body{
     height: 100%;
     width: 100%;
     margin: 0vh 0px;
+    background-color: rgb(44, 44, 44);
+    background-image: url("https://cdn.discordapp.com/attachments/960370482643881984/1042603834633109584/prueba1.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    color: rgb(44, 44, 44);
 }
 ul{
     padding: 0px 3vh 0px;
+    background: transparent;
+    background-color: transparent;
 }
 .simbols{
     float: left;
@@ -165,7 +173,6 @@ button{
     <img id="etec" src="https://um.edu.ar/wp-content/uploads/2020/05/ETEC-logo.jpg" alt="">
     <title>Estacion Metelorogica</title>
     <link rel="icon" href="https://media.discordapp.net/attachments/909971778724593684/1034524837433057342/ja.png">
-    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <section id="basicData">
@@ -339,10 +346,12 @@ function grafico(x=grafica[0], temperatura=grafica[1], humedad=grafica[2], presi
 
     myChart = new Chart(ctx, {
         type: 'line',
+        
         data: {
             labels: x,
             datasets: [{
                 label: 'Temperatura',
+                yAxisID: "TempY",
                 data: temperatura,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -354,6 +363,7 @@ function grafico(x=grafica[0], temperatura=grafica[1], humedad=grafica[2], presi
             },
             {
                 label: 'Humedad',
+                yAxisID: "TempY",
                 data: humedad,
                 backgroundColor: [
                     'rgba(54, 162, 235, 0.2)',
@@ -365,6 +375,7 @@ function grafico(x=grafica[0], temperatura=grafica[1], humedad=grafica[2], presi
             },
             {
                 label: 'Presion Atmosferica',
+                yAxisID: "BpY",
                 data: presion,
                 backgroundColor: [
                     'rgba(255, 206, 86, 0.2)',
@@ -388,9 +399,23 @@ function grafico(x=grafica[0], temperatura=grafica[1], humedad=grafica[2], presi
                 duration: 1
             },
             scales: {
-                y: {
-                    beginAtZero: true
+                yAxes: [{
+                    id: "TempY",
+                    beginAtZero: false,
+                    position: "left",
+                    scaleLabel:{fontColor: "#49eb34"}
+                },
+                {
+                    id: "HumY",
+                    beginAtZero: false,
+                    position: "left"
+                },
+                {
+                    id: "BpY",
+                    beginAtZero: false,
+                    position: "right",
                 }
+            ]
             }
         }
     });
@@ -559,4 +584,3 @@ function Init(){
 }
 </script>
 </html>
-<script src="./app.js"></script>
