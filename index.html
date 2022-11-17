@@ -278,7 +278,7 @@ let luz = document.getElementById("luz")
 let upButton = document.getElementById("+");
 let downButton = document.getElementById("-");
 
-const socket = WSconnect();
+let socket = WSconnect();
 const ctx = document.getElementById('myChart');
 let myChart;
 
@@ -389,6 +389,12 @@ function grafico(x=grafica[0], temperatura=grafica[1], humedad=grafica[2], presi
         ]
         },
         options: {
+            elements: {
+            line: {
+                tension: 0.2,
+                borderJoinStyle: 'round'
+                }
+            },
             plugins: {
                 legend: {
                     display: true,
@@ -512,10 +518,22 @@ socket.addEventListener("error", function(event){
 
 // evento de conexion al WS
 socket.addEventListener('open', function (event) {
-    console.log('Connected to WS Server')
+    console.log('conectado a WS Server')
     socket.send("hi")
 });
 
+socket.addEventListener("close", function (event){
+    console.log("Me desconecte del server");
+    console.log(event.reason);
+    setTimeout(function() {
+      WSconnect();
+    }, 1000);
+});
+socket.addEventListener("error", function(event){
+    console.log("ocurrio un error en WS");
+    console.log(event.message);
+    socket.close();
+});
 
 // esto escucha mensajes del servidor
 socket.addEventListener('message', function (event) {
