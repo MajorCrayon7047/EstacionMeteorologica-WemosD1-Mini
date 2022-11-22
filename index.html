@@ -110,21 +110,26 @@ button{
     padding: 0 0;
     background-color: transparent;
 }
+/*#AAAA{
+    display: flex;
+}*/
 #etec{
-    position: absolute;
-    height: 8vh;
-    width: 8vh;
+    float: left;
+    height: 50px;
+    width:180px;
     left: 0;
     top: 0vh;
     padding: 0vw 0vh 0vh;
-    margin-top: 2vh;
-    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+    margin-top: 0vw;
+    
 }
 #titulo{
     position: relative;
     padding: 0px 3vh 0px;
-    margin-left: 7.5vh;
+    margin-left: 0vh;
     font-size: 5vh;
+    margin: 2vh 0 2vh;
 }
 #weas{
     display: flex;
@@ -146,7 +151,7 @@ button{
     border: none;
     cursor:pointer;
     background-color: transparent;
-    margin-top: 3vw;
+    margin-top: 1vw;
 }
 #excel{
     width: 90px;
@@ -164,13 +169,20 @@ button{
     border: none;
     cursor:pointer;
     background-color: transparent;
-    margin-top: 3vw;
+    margin-top: 1vw;
+}
+#disclaimer{
+    color: rgba(240, 255, 255, 0.733);
+    font-size: 15px;
+    padding: 1vw 0 0;
+    margin-left: 2vh;
 }
     </style>
 </head>
 <body>
-    <h1 id="titulo">Estación Meteorológica</h1>
-    <img id="etec" src="https://um.edu.ar/wp-content/uploads/2020/05/ETEC-logo.jpg" alt="">
+    <section id="AAAA">
+        <h1 id="titulo">Estación Meteorológica</h1>
+    </section>
     <title>Estacion Metelorogica</title>
     <link rel="icon" href="https://media.discordapp.net/attachments/909971778724593684/1034524837433057342/ja.png">
 </head>
@@ -183,7 +195,7 @@ button{
                 <img src="https://media.discordapp.net/attachments/909971778724593684/1034524864503107696/presion.png" alt="" class="simbols"><h1>Presion Atmosferica: <span id="bp">0</span>hPa</h1>
                 <img src="https://media.discordapp.net/attachments/909971778724593684/1034524864939303046/reloj.png" alt="" class="simbols" id="reloj"><p id="act">Ultima actualizacion: <span id="time">0</span></p>
                 <img id="luz" src="" alt="">
-                <img id="etec" src="https://um.edu.ar/wp-content/uploads/2020/05/ETEC-logo.jpg" alt="">
+                <!--<img id="etec" src="https://um.edu.ar/wp-content/uploads/2020/05/ETEC-logo.jpg" alt="">-->
             </ul>
             
             <!-- <img class="Nagatoro" src="recursos/Naga.png" alt=""> -->
@@ -245,7 +257,9 @@ button{
         </div>
     </section>
     <footer>
+        <p id="disclaimer"> ⚠️ <b>Disclaimer:</b> Los datos obtenidos por la estacion pueden no estar apegados a la realidad ya que sigue en etapa de pruebas.</p>
         <div id="weas">
+            <img id="etec" src="https://cdn.discordapp.com/attachments/664190600270184448/1044635131022950440/Logo_ETec.png" alt="">
             <button id="git2" type="button" onclick=" window.open('https://github.com/MajorCrayon7047/EstacionMeteorologica-WemosD1-Mini', '_blank'); return false;">
                 <img id="git1" src="https://cdn.discordapp.com/attachments/664190600270184448/1042179909398831244/estacion_logo.png" alt="">
             </button>
@@ -253,6 +267,7 @@ button{
                 <img id="excel1" src="https://cdn.discordapp.com/attachments/664190600270184448/1042405121612587058/DB_EXcel.png" alt="">
             </button>
         </div>
+        
     </footer>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js" integrity="sha512-zjlf0U0eJmSo1Le4/zcZI51ks5SjuQXkU0yOdsOBubjSmio9iCUp8XPLkEAADZNBdR9crRy3cniZ65LF2w8sRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -551,7 +566,7 @@ socket.addEventListener('message', function (event) {
         //esto cambia los valores del documento segun lo que me mande el servidor
         temp.innerHTML = data["temp"];
         hum.innerHTML = data["hum"];
-        bp.innerHTML = data["bp"];
+        bp.innerHTML = parseInt(data["bp"]);
         UltimaAct.innerHTML = ` ‎Hora: ${data["hora"][0]} ‎ ‎ | ‎ ‎ Fecha: ${data["hora"][1]}`;
         if (data["luz"] == "sol"){
             luz.src = "recursos/sol.png";
