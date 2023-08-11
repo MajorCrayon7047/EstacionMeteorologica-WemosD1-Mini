@@ -2,7 +2,7 @@
     {
         "id": "eb198e8f3014c237",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Estación Meteorológica ",
         "disabled": false,
         "info": "",
         "env": []
@@ -43,63 +43,7 @@
         "y": 60,
         "wires": [
             [
-                "4859e5d030a0f364",
                 "26b6b0c88a870b45"
-            ]
-        ]
-    },
-    {
-        "id": "4859e5d030a0f364",
-        "type": "ui_text",
-        "z": "eb198e8f3014c237",
-        "group": "48182c0b44584834",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "name": "papitas again",
-        "label": "value",
-        "format": "{{msg.payload}}",
-        "layout": "row-spread",
-        "className": "",
-        "x": 370,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "26b6b0c88a870b45",
-        "type": "debug",
-        "z": "eb198e8f3014c237",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "35c864c97bfa6e47",
-        "type": "mqtt in",
-        "z": "eb198e8f3014c237",
-        "name": "",
-        "topic": "temp",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "103af03ab387ac01",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 70,
-        "y": 160,
-        "wires": [
-            [
-                "9c095a0fe65d6679"
             ]
         ]
     },
@@ -119,42 +63,6 @@
         "broker": "103af03ab387ac01",
         "x": 730,
         "y": 60,
-        "wires": []
-    },
-    {
-        "id": "799bb40e8c103f3b",
-        "type": "mqtt in",
-        "z": "eb198e8f3014c237",
-        "name": "",
-        "topic": "hum",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "103af03ab387ac01",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 70,
-        "y": 280,
-        "wires": [
-            [
-                "9c095a0fe65d6679"
-            ]
-        ]
-    },
-    {
-        "id": "0f7bbd2c122b0779",
-        "type": "mongodb out",
-        "z": "eb198e8f3014c237",
-        "mongodb": "1b66266462ffccc3",
-        "name": "JSON 2.0 (La Venganza)",
-        "collection": "pruebas",
-        "payonly": true,
-        "upsert": false,
-        "multi": false,
-        "operation": "store",
-        "x": 1090,
-        "y": 220,
         "wires": []
     },
     {
@@ -182,7 +90,8 @@
         "wires": [
             [
                 "d0e1c4a9c9f04337",
-                "5002d832d1b6aeab"
+                "5002d832d1b6aeab",
+                "fed1c0e6f219b288"
             ]
         ]
     },
@@ -191,53 +100,19 @@
         "type": "function",
         "z": "eb198e8f3014c237",
         "name": "function 6",
-        "func": "function time() {\n    let fecha = new Date();\n    let hora = fecha.getHours();\n    if (hora < 10) { hora = \"0\" + hora.toString(); }\n    let minutos = fecha.getMinutes();\n    if (minutos < 10) { minutos = \"0\" + minutos.toString(); }\n    let mes = fecha.getMonth() + 1;\n    mes = mes.toString();\n    let dia = fecha.getDate();\n    dia = dia.toString();\n    return [hora + \":\" + minutos, mes + \"/\" + dia]\n}\nmsg.payload[\"dat\"][\"bp\"] = NaN\nmsg.payload[\"dat\"][\"hora\"] = time()\n\nlet Dstr = Object.keys(msg.payload[\"db\"]).length - 1;\nlet graph = [];\nlet hora1 = [];\nlet temp1 = [];\nlet hum1 = [];\nlet bp1 = [];\nlet datos = msg.payload[\"db\"];\nlet datos2 = msg.payload[\"db\"][Dstr]\n\nfor (let i = Dstr - 50; i <= Dstr; i++) {\n    hora1.push(datos[i.toString()][\"hora\"]);\n    temp1.push(datos[i.toString()][\"temp\"]);\n    hum1.push(datos[i.toString()][\"hum\"]);\n    bp1.push(NaN);\n}\ngraph.push(hora1);\ngraph.push(temp1);\ngraph.push(hum1);\ngraph.push(bp1);\n\n\nmsg.payload = {\n    \"temp\": msg.payload[\"dat\"][\"temp\"],\n    \"hum\": msg.payload[\"dat\"][\"hum\"],\n    \"bp\": NaN,\n    \"luz\": msg.payload[\"dat\"][\"luz\"],\n    \"hora\": msg.payload[\"dat\"][\"hora\"],\n    \"graph\": graph\n}\nmsg._session = \"\";\nreturn msg",
+        "func": "function time() {\n    let fecha = new Date();\n    let hora = fecha.getHours();\n    if (hora < 10) { hora = \"0\" + hora.toString(); }\n    let minutos = fecha.getMinutes();\n    if (minutos < 10) { minutos = \"0\" + minutos.toString(); }\n    let mes = fecha.getMonth() + 1;\n    mes = mes.toString();\n    let dia = fecha.getDate();\n    dia = dia.toString();\n    return [hora + \":\" + minutos, mes + \"/\" + dia]\n}\nmsg.payload[\"dat\"][\"hora\"] = time()\n\nlet Dstr = Object.keys(msg.payload[\"db\"]).length - 1;\nlet graph = [];\nlet hora1 = [];\nlet temp1 = [];\nlet hum1 = [];\nlet bp1 = [];\nlet datos = msg.payload[\"db\"];\nlet datos2 = msg.payload[\"db\"][Dstr]\n\nfor (let i = Dstr - 50; i <= Dstr; i++) {\n    hora1.push(datos[i.toString()][\"hora\"]);\n    temp1.push(datos[i.toString()][\"temp\"]);\n    hum1.push(datos[i.toString()][\"hum\"]);\n    bp1.push(datos[i.toString()][\"bp\"]);\n}\ngraph.push(hora1);\ngraph.push(temp1);\ngraph.push(hum1);\ngraph.push(bp1);\n\n\nmsg.payload = {\n    \"temp\": msg.payload[\"dat\"][\"temp\"],\n    \"hum\": msg.payload[\"dat\"][\"hum\"],\n    \"bp\": msg.payload[\"dat\"][\"bp\"],\n    \"luz\": msg.payload[\"dat\"][\"luz\"],\n    \"hora\": msg.payload[\"dat\"][\"hora\"],\n    \"graph\": graph\n}\nmsg._session = \"\";\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 880,
+        "x": 920,
         "y": 220,
         "wires": [
             [
-                "0f7bbd2c122b0779",
+                "e4be7bf9f083925d",
                 "f5b3962801329cca"
             ]
-        ]
-    },
-    {
-        "id": "208deeba83af2214",
-        "type": "mongodb in",
-        "z": "eb198e8f3014c237",
-        "mongodb": "1b66266462ffccc3",
-        "name": "JSON MOMENT",
-        "collection": "pruebas",
-        "operation": "find",
-        "x": 460,
-        "y": 400,
-        "wires": [
-            [
-                "1cfdf2a7b493c1de"
-            ]
-        ]
-    },
-    {
-        "id": "6673a4d13bc94378",
-        "type": "function",
-        "z": "eb198e8f3014c237",
-        "name": "Data division",
-        "func": "let Dstr = Object.keys(msg.payload).length - 1;\n\nmsg.payload = msg.payload[Dstr]\ndelete msg.payload[\"_id\"]\n\nvar temp = { payload: msg.payload[\"temp\"] };\nvar hum = { payload: msg.payload[\"hum\"] };\n\nreturn [temp, hum]\n",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 90,
-        "y": 620,
-        "wires": [
-            [],
-            []
         ]
     },
     {
@@ -248,6 +123,11 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "limit",
+                "v": "100",
+                "vt": "str"
             }
         ],
         "repeat": "",
@@ -261,7 +141,7 @@
         "y": 400,
         "wires": [
             [
-                "208deeba83af2214"
+                "0863bb18c761de1e"
             ]
         ]
     },
@@ -270,7 +150,7 @@
         "type": "function",
         "z": "eb198e8f3014c237",
         "name": "THIS IS GLORIUS",
-        "func": "let Dstr = Object.keys(msg.payload).length - 1;\nlet graph = [];\nlet hora1 = [];\nlet temp1 = [];\nlet hum1 = [];\nlet bp1 = [];\nlet datos = msg.payload;\nlet datos2 = msg.payload[Dstr]\ndelete msg.payload[\"_id\"]\n\nfor (let i = Dstr - 50; i <= Dstr; i++) {\n    hora1.push(datos[i.toString()][\"hora\"]);\n    temp1.push(datos[i.toString()][\"temp\"]);\n    hum1.push(datos[i.toString()][\"hum\"]);\n    bp1.push(NaN);\n}\ngraph.push(hora1);\ngraph.push(temp1);\ngraph.push(hum1);\ngraph.push(bp1);\n\ndatos2[\"graph\"] = graph;\n\nmsg.payload = {\n        \"temp\" : datos2[\"temp\"],\n        \"hum\": datos2[\"hum\"],\n        \"bp\": NaN,\n        \"luz\": datos2[\"luz\"],\n        \"hora\": datos2[\"hora\"],\n        \"graph\": datos2[\"graph\"]\n}\nmsg._session = \"\";\nreturn msg",
+        "func": "let Dstr = Object.keys(msg.payload).length - 1;\nlet graph = [];\nlet hora1 = [];\nlet temp1 = [];\nlet hum1 = [];\nlet bp1 = [];\nlet datos = msg.payload;\nlet datos2 = msg.payload[Dstr]\ndelete msg.payload[\"_id\"]\n\nfor (let i = Dstr - 50; i <= Dstr; i++) {\n    hora1.push(datos[i.toString()][\"hora\"]);\n    temp1.push(datos[i.toString()][\"temp\"]);\n    hum1.push(datos[i.toString()][\"hum\"]);\n    bp1.push(datos[i.toString()][\"bp\"]);\n}\ngraph.push(hora1);\ngraph.push(temp1);\ngraph.push(hum1);\ngraph.push(bp1);\n\ndatos2[\"graph\"] = graph;\n\nmsg.payload = {\n        \"temp\" : datos2[\"temp\"],\n        \"hum\": datos2[\"hum\"],\n        \"bp\": datos2[\"bp\"],\n        \"luz\": datos2[\"luz\"],\n        \"hora\": datos2[\"hora\"],\n        \"graph\": datos2[\"graph\"]\n}\nmsg._session = \"\";\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -306,7 +186,7 @@
         "type": "file in",
         "z": "eb198e8f3014c237",
         "name": "HTML",
-        "filename": "C:/Users/nicol/.node-red/staticContent/ws.html",
+        "filename": "/home/etec/EstacionMeteorologica-WemosD1-Mini/index.html",
         "filenameType": "str",
         "format": "utf8",
         "encoding": "none",
@@ -361,17 +241,17 @@
         "type": "function",
         "z": "eb198e8f3014c237",
         "name": "TRUE? 2.0",
-        "func": "if (msg.payload == \"hi\"){\n    msg.payload = true;\n}\nelse {msg.payload = false}\n\nreturn msg;",
+        "func": "if (msg.payload == \"hi\"){\n    msg.payload = true;\n    msg.limit = 100;\n}\nelse {msg.payload = false}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 270,
+        "x": 230,
         "y": 440,
         "wires": [
             [
-                "208deeba83af2214"
+                "0863bb18c761de1e"
             ]
         ]
     },
@@ -380,7 +260,7 @@
         "type": "function",
         "z": "eb198e8f3014c237",
         "name": "TRUE?",
-        "func": "msg.payload=true;\n\nreturn msg;",
+        "func": "msg.payload=true;\nmsg.limit = 200;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -390,23 +270,7 @@
         "y": 260,
         "wires": [
             [
-                "11ee3ca02cb469d6"
-            ]
-        ]
-    },
-    {
-        "id": "11ee3ca02cb469d6",
-        "type": "mongodb in",
-        "z": "eb198e8f3014c237",
-        "mongodb": "1b66266462ffccc3",
-        "name": "PAIN",
-        "collection": "pruebas",
-        "operation": "find",
-        "x": 470,
-        "y": 260,
-        "wires": [
-            [
-                "44385bd456e99c5d"
+                "bfde5dbd63403f7f"
             ]
         ]
     },
@@ -430,7 +294,7 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 750,
+        "x": 790,
         "y": 220,
         "wires": [
             [
@@ -449,7 +313,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 610,
+        "x": 630,
         "y": 260,
         "wires": [
             [
@@ -483,8 +347,8 @@
         "name": "ws O 2.0",
         "server": "985ecbc7.67a138",
         "client": "",
-        "x": 1040,
-        "y": 160,
+        "x": 1080,
+        "y": 280,
         "wires": []
     },
     {
@@ -538,11 +402,84 @@
         ]
     },
     {
+        "id": "e4be7bf9f083925d",
+        "type": "mongodb out",
+        "z": "eb198e8f3014c237",
+        "mongodb": "9d409d5b3f04756b",
+        "name": "JSON 3.0 (La Venganza)",
+        "collection": "pruebas2",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 1130,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "0863bb18c761de1e",
+        "type": "mongodb in",
+        "z": "eb198e8f3014c237",
+        "mongodb": "9d409d5b3f04756b",
+        "name": "JSON MOMENT 2.0",
+        "collection": "pruebas2",
+        "operation": "find",
+        "x": 440,
+        "y": 400,
+        "wires": [
+            [
+                "1cfdf2a7b493c1de"
+            ]
+        ]
+    },
+    {
+        "id": "35c864c97bfa6e47",
+        "type": "mqtt in",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "topic": "temp",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "103af03ab387ac01",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 70,
+        "y": 160,
+        "wires": [
+            [
+                "9c095a0fe65d6679"
+            ]
+        ]
+    },
+    {
+        "id": "799bb40e8c103f3b",
+        "type": "mqtt in",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "topic": "hum",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "103af03ab387ac01",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 70,
+        "y": 280,
+        "wires": [
+            [
+                "9c095a0fe65d6679"
+            ]
+        ]
+    },
+    {
         "id": "887d9da3f9304108",
         "type": "mqtt in",
         "z": "eb198e8f3014c237",
         "name": "",
-        "topic": "luz",
+        "topic": "bp",
         "qos": "2",
         "datatype": "auto-detect",
         "broker": "103af03ab387ac01",
@@ -559,10 +496,275 @@
         ]
     },
     {
+        "id": "4a4e0969cf0c9cb1",
+        "type": "http in",
+        "z": "eb198e8f3014c237",
+        "name": "Excel http",
+        "url": "/excel",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 80,
+        "y": 560,
+        "wires": [
+            [
+                "5115f4a323a9b317"
+            ]
+        ]
+    },
+    {
+        "id": "048f8e54264f0be6",
+        "type": "http response",
+        "z": "eb198e8f3014c237",
+        "name": "RESPONSE EXCEL",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 680,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "02a8bcbf2336db2d",
+        "type": "mongodb in",
+        "z": "eb198e8f3014c237",
+        "mongodb": "9d409d5b3f04756b",
+        "name": "JSON & EXCEL",
+        "collection": "pruebas2",
+        "operation": "find",
+        "x": 360,
+        "y": 560,
+        "wires": [
+            [
+                "d4cecfa1bfb1543b"
+            ]
+        ]
+    },
+    {
+        "id": "d4cecfa1bfb1543b",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "XD",
+        "func": "msg.payload = JSON.stringify(msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 560,
+        "wires": [
+            [
+                "048f8e54264f0be6"
+            ]
+        ]
+    },
+    {
+        "id": "26b6b0c88a870b45",
+        "type": "debug",
+        "z": "eb198e8f3014c237",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "f12a91a475cf3ad6",
+        "type": "inject",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 500,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cf7051d6c3a86f5d",
+        "type": "http in",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "url": "/temp",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 80,
+        "y": 600,
+        "wires": [
+            [
+                "57c34d3dc0e9620e"
+            ]
+        ]
+    },
+    {
+        "id": "1a81d82bc96a7976",
+        "type": "mongodb in",
+        "z": "eb198e8f3014c237",
+        "mongodb": "9d409d5b3f04756b",
+        "name": "JSON & EXCEL",
+        "collection": "pruebas2",
+        "operation": "find",
+        "x": 360,
+        "y": 600,
+        "wires": [
+            [
+                "10488284bbd955e7"
+            ]
+        ]
+    },
+    {
+        "id": "10488284bbd955e7",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "XD2",
+        "func": "let Dstr = Object.keys(msg.payload).length - 1;\nlet datos2 = msg.payload[Dstr]\nmsg.payload = {\n    \"temp\": datos2[\"temp\"],\n    'hum' : datos2['hum']\n}\nmsg._session = \"\";\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 600,
+        "wires": [
+            [
+                "4581d45a6eed4bc7"
+            ]
+        ]
+    },
+    {
+        "id": "4581d45a6eed4bc7",
+        "type": "http response",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 630,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "bfde5dbd63403f7f",
+        "type": "mongodb in",
+        "z": "eb198e8f3014c237",
+        "mongodb": "9d409d5b3f04756b",
+        "name": "PAIN 2.0",
+        "collection": "pruebas2",
+        "operation": "find",
+        "x": 480,
+        "y": 260,
+        "wires": [
+            [
+                "44385bd456e99c5d"
+            ]
+        ]
+    },
+    {
+        "id": "5115f4a323a9b317",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "limiter",
+        "func": "msg.limit = 4000;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 560,
+        "wires": [
+            [
+                "02a8bcbf2336db2d"
+            ]
+        ]
+    },
+    {
+        "id": "57c34d3dc0e9620e",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "limiter",
+        "func": "msg.limit = 10;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 600,
+        "wires": [
+            [
+                "1a81d82bc96a7976"
+            ]
+        ]
+    },
+    {
+        "id": "24c674998a27b166",
+        "type": "mqtt out",
+        "z": "eb198e8f3014c237",
+        "name": "",
+        "topic": "sleep",
+        "qos": "1",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "103af03ab387ac01",
+        "x": 510,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "fed1c0e6f219b288",
+        "type": "function",
+        "z": "eb198e8f3014c237",
+        "name": "Allow Sleep",
+        "func": "msg.payload=\"SLEEP\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 160,
+        "wires": [
+            [
+                "24c674998a27b166"
+            ]
+        ]
+    },
+    {
         "id": "103af03ab387ac01",
         "type": "mqtt-broker",
         "name": "Mi server luna de pluton",
-        "broker": "10.54.3.150",
+        "broker": "192.168.40.242",
         "port": "1883",
         "clientid": "",
         "autoConnect": true,
@@ -586,27 +788,6 @@
         "sessionExpiry": ""
     },
     {
-        "id": "48182c0b44584834",
-        "type": "ui_group",
-        "name": "IDK",
-        "tab": "43d97f4526b4d871",
-        "order": 4,
-        "disp": true,
-        "width": "6",
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "1b66266462ffccc3",
-        "type": "mongodb",
-        "hostname": "127.0.0.1",
-        "topology": "direct",
-        "connectOptions": "",
-        "port": "27017",
-        "db": "EM",
-        "name": ""
-    },
-    {
         "id": "985ecbc7.67a138",
         "type": "websocket-listener",
         "z": "eb198e8f3014c237",
@@ -614,11 +795,13 @@
         "wholemsg": "false"
     },
     {
-        "id": "43d97f4526b4d871",
-        "type": "ui_tab",
-        "name": "EM ETEC",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
+        "id": "9d409d5b3f04756b",
+        "type": "mongodb",
+        "hostname": "127.0.0.1",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "EM",
+        "name": ""
     }
 ]
